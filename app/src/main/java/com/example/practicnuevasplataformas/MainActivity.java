@@ -23,30 +23,24 @@ public class MainActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });Button btnCreateRed = findViewById(R.id.btnCreateRed);
+        Button btnCreateOrange = findViewById(R.id.btnCreateOrange);
+
+        btnCreateRed.setOnClickListener(v -> {
+            replaceFragment(new RedFragment());
         });
+
+        btnCreateOrange.setOnClickListener(v -> {
+            replaceFragment(new OrangeFragment());
+        });
+    }
+
+    private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-
-        Button buttonCreateRed = findViewById(R.id.btnCreateRed);
-        Button buttonCreateOrange = findViewById(R.id.btnCreateOrange);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        buttonCreateRed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RedFragment redFragment = RedFragment.newInstance("", "");
-                fragmentTransaction.add(R.id.fragment_conteiner, redFragment);
-                fragmentTransaction.commit();
-            }
-        });
-
-        buttonCreateOrange.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                OrangeFragment orangeFragment = OrangeFragment.newInstance("","");
-                fragmentTransaction.add(R.id.fragment_conteiner, orangeFragment);
-                fragmentTransaction.commit();
-            }
-        });
+        fragmentTransaction.replace(R.id.fragment_conteiner, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
 
     }
 }
